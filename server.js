@@ -23,9 +23,9 @@ DubcoreAI offers:
 
 Keep responses SHORT — 1-2 sentences max. This is a phone call. Be warm, professional, and helpful. Always offer to book a free consultation or take a message.`;
 
-// Root health check
+// Root - serve website
 app.get('/', (req, res) => {
-  res.send('DubcoreAI AI Receptionist is live. Ready to answer calls.');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/status', (req, res) => {
