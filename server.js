@@ -7,14 +7,14 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
-
+h
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 async function sendLeadEmail(name, phone, callSid) {
         try {
                   const emailData = JSON.stringify({
                               personalizations: [{ to: [{ email: 'aqayali8@gmail.com' }] }],
-                              from: { email: 'aqayali8@gmail.com' },
+                                          from: { email: 'noreply@dubcoreai.com' },
                               subject: 'DubcoreAI - New Lead',
                               content: [{ type: 'text/plain', value: 'Name: ' + name + '\nPhone: ' + phone + '\nCall ID: ' + callSid + '\n\nCall them back ASAP!' }]
                   });
