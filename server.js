@@ -190,4 +190,37 @@ app.options('/notify', (req, res) => {
 });
 // ===== END NOTIFICATION ENDPOINT =====
 
+
+
+// GET REAL CHAT ID FROM TELEGRAM
+app.get('/getid', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  const https = require('https');
+  const options = {
+    hostname: 'api.telegram.org',
+    path: '/bot8858146510:AAGRN5XQcl8kCfZ4yha0q1fuUjCF4ER2qL8/getUpdates?limit=10',
+    method: 'GET'
+  };
+  const tgReq = https.request(options, tgRes => {
+    let data = '';
+    tgRes.on('data', chunk => data += chunk);
+    tgRes.on('end', () => {
+      try {
+        const parsed = JSON.parse(data);
+        const chats = (parsed.result || []).map(u => ({
+          chat_id: u.message ? u.message.chat.id : (u.callback_query ? u.callback_query.from.id : 'unknown'),
+          username: u.message ? u.message.from.username : '',
+          first_name: u.message ? u.message.from.first_name : '',
+          text: u.message ? u.message.text : ''
+        }));
+        res.json({ ok: true, chats, raw: parsed.result ? parsed.result.length : 0 });
+      } catch(e) {
+        res.json({ ok: false, raw: data });
+      }
+    });
+  });
+  tgReq.on('error', e => res.json({ ok: false, error: e.message }));
+  tgReq.end();
+});
+
 app.listen(PORT, () => { console.log('DubcoreAI AI Receptionist running on port ' + PORT); });
