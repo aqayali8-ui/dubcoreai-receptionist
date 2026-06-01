@@ -144,4 +144,50 @@ app.post('/call-status', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
+
+// ===== CHAT WIDGET NOTIFICATION ENDPOINT =====
+app.post('/notify', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  try {
+    const { name, contact, message, business } = req.body;
+    const ts = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
+    const text = (business === 'Magnolia Title Services' ? '🌸' : '🤖') +
+      ' ' + (business || 'DubcoreAI') + ' — NEW CHAT\n' +
+      '━━━━━━━━━━━━━\n' +
+      'From: ' + (name || 'Visitor') + '\n' +
+      'Contact: ' + (contact || 'Not provided') + '\n' +
+      'Time: ' + ts + ' CST\n' +
+      '━━━━━━━━━━━━━\n' +
+      (message || '');
+    const https = require('https');
+    const postData = JSON.stringify({ chat_id: '7951849803', text });
+    const options = {
+      hostname: 'api.telegram.org',
+      path: '/bot8858146510:AAGRN5XQcl8kCfZ4yha0q1fuUjCF4ER2qL8/sendMessage',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(postData) }
+    };
+    const tgReq = https.request(options, tgRes => {
+      let data = '';
+      tgRes.on('data', chunk => data += chunk);
+      tgRes.on('end', () => res.json({ ok: true }));
+    });
+    tgReq.on('error', e => res.json({ ok: false, error: e.message }));
+    tgReq.write(postData);
+    tgReq.end();
+  } catch(e) {
+    res.json({ ok: false, error: e.message });
+  }
+});
+
+app.options('/notify', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.sendStatus(200);
+});
+// ===== END NOTIFICATION ENDPOINT =====
+
 app.listen(PORT, () => { console.log('DubcoreAI AI Receptionist running on port ' + PORT); });
