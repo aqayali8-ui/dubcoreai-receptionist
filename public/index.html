@@ -217,81 +217,93 @@
     });
   </script>
 
+
 <!-- DUBCOREAI CHAT WIDGET -->
 <style>
 #dubcore-chat-widget{position:fixed;bottom:28px;right:28px;z-index:9999;font-family:'Courier New',monospace}
-#dubcore-toggle{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#00f5ff,#0066ff);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px #00f5ff55;transition:all .3s ease;position:relative;animation:dc-pulse 3s infinite}
-@keyframes dc-pulse{0%,100%{box-shadow:0 0 24px #00f5ff55}50%{box-shadow:0 0 40px #00f5ff88}}
+#dubcore-toggle{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#00f5ff,#0066ff);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(0,245,255,.33);transition:all .3s;position:relative;animation:dc-p 3s infinite}
+@keyframes dc-p{0%,100%{box-shadow:0 0 24px rgba(0,245,255,.33)}50%{box-shadow:0 0 40px rgba(0,245,255,.53)}}
 #dubcore-toggle:hover{transform:scale(1.08)}
 #dc-notif{position:absolute;top:2px;right:2px;width:14px;height:14px;background:#ff3366;border-radius:50%;border:2px solid #0a0a0f;display:none}
-#dubcore-box{position:absolute;bottom:76px;right:0;width:340px;background:#0d0d1a;border:1px solid #00f5ff33;border-radius:16px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 20px 60px #00000099}
+#dubcore-box{position:absolute;bottom:76px;right:0;width:320px;background:#0d0d1a;border:1px solid rgba(0,245,255,.2);border-radius:16px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 #dubcore-box.open{display:flex}
-#dc-header{background:linear-gradient(135deg,#080820,#0d1640);border-bottom:1px solid #00f5ff22;padding:16px 18px;display:flex;align-items:center;gap:12px}
-.dc-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#00f5ff,#0066ff);display:flex;align-items:center;justify-content:center;font-weight:900;color:#0a0a0f;font-size:16px;flex-shrink:0}
-.dc-hname{font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase}
-.dc-hsub{font-size:10px;color:#00f5ff;letter-spacing:1px;display:flex;align-items:center;gap:5px;margin-top:2px}
-.dc-sdot{width:6px;height:6px;background:#00ff88;border-radius:50%;animation:dc-blink 2s infinite}
-@keyframes dc-blink{0%,100%{opacity:1}50%{opacity:.3}}
-.dc-xbtn{background:none;border:none;color:#ffffff55;cursor:pointer;font-size:18px;margin-left:auto;padding:2px 6px}
-.dc-xbtn:hover{color:#fff}
-#dc-name-row{display:flex;gap:8px;padding:12px 14px 0;background:#080814}
-.dc-inp{flex:1;background:#0d0d20;border:1px solid #00f5ff22;color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;font-family:inherit;outline:none}
-.dc-inp::placeholder{color:#ffffff33}
-.dc-inp:focus{border-color:#00f5ff66}
-#dc-messages{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;max-height:240px}
-.dc-msg{max-width:82%;padding:10px 14px;border-radius:12px;font-size:12.5px;line-height:1.5}
-.dc-msg.bot{background:#151530;border:1px solid #00f5ff22;color:#ccddf5;align-self:flex-start;border-bottom-left-radius:4px}
-.dc-msg.user{background:linear-gradient(135deg,#00f5ff22,#0066ff22);border:1px solid #00f5ff44;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.dc-msg.ok{background:#00ff8811;border:1px solid #00ff8844;color:#00ff88;font-size:11px;align-self:center;text-align:center;border-radius:8px;max-width:95%}
-#dc-quick{display:flex;gap:6px;padding:0 16px 10px;flex-wrap:wrap}
-.dc-q{background:#0d1640;border:1px solid #00f5ff33;color:#00f5ff;padding:5px 10px;border-radius:20px;font-size:10.5px;cursor:pointer;font-family:inherit;letter-spacing:.5px}
-.dc-q:hover{background:#00f5ff22;border-color:#00f5ff88}
-#dc-input-area{border-top:1px solid #00f5ff11;padding:12px 14px;display:flex;gap:8px;align-items:flex-end;background:#080814}
-#dc-input{flex:1;background:#0d0d20;border:1px solid #00f5ff22;color:#fff;padding:10px 12px;border-radius:10px;font-size:12px;font-family:inherit;resize:none;outline:none;min-height:40px;max-height:90px}
-#dc-input::placeholder{color:#ffffff33}
-#dc-input:focus{border-color:#00f5ff66}
-#dc-send{background:linear-gradient(135deg,#00f5ff,#0066ff);border:none;color:#0a0a0f;width:38px;height:38px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-#dc-send:hover{transform:scale(1.05)}
-.dc-typing{display:flex;gap:4px;align-items:center;padding:10px 14px;background:#151530;border:1px solid #00f5ff22;border-radius:12px;border-bottom-left-radius:4px;align-self:flex-start;width:fit-content}
-.dc-typing span{width:5px;height:5px;background:#00f5ff;border-radius:50%;animation:dc-t 1.2s infinite}
-.dc-typing span:nth-child(2){animation-delay:.2s}
-.dc-typing span:nth-child(3){animation-delay:.4s}
+#dc-hdr{background:linear-gradient(135deg,#080820,#0d1640);border-bottom:1px solid rgba(0,245,255,.13);padding:16px 18px;display:flex;align-items:center;gap:12px}
+.dc-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#00f5ff,#0066ff);display:flex;align-items:center;justify-content:center;font-weight:900;color:#0a0a0f;font-size:16px;flex-shrink:0}
+.dc-hn{font-size:12px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase}
+.dc-hs{font-size:10px;color:#00f5ff;letter-spacing:1px;display:flex;align-items:center;gap:5px;margin-top:2px}
+.dc-sd{width:6px;height:6px;background:#00ff88;border-radius:50%;animation:dc-bl 2s infinite}
+@keyframes dc-bl{0%,100%{opacity:1}50%{opacity:.3}}
+.dc-xb{background:none;border:none;color:rgba(255,255,255,.33);cursor:pointer;font-size:18px;margin-left:auto}
+.dc-xb:hover{color:#fff}
+#dc-nr{display:flex;gap:8px;padding:12px 14px 0;background:#080814}
+.dc-in{flex:1;background:#0d0d20;border:1px solid rgba(0,245,255,.13);color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;font-family:inherit;outline:none}
+.dc-in::placeholder{color:rgba(255,255,255,.2)}
+.dc-in:focus{border-color:rgba(0,245,255,.4)}
+#dc-msgs{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;max-height:220px}
+.dc-m{max-width:82%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.5}
+.dc-m.bot{background:#151530;border:1px solid rgba(0,245,255,.13);color:#ccddf5;align-self:flex-start;border-bottom-left-radius:4px}
+.dc-m.usr{background:rgba(0,102,255,.2);border:1px solid rgba(0,245,255,.27);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.dc-m.ok{background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.27);color:#00ff88;font-size:11px;align-self:center;text-align:center;border-radius:8px;max-width:95%}
+#dc-qk{display:flex;gap:6px;padding:0 16px 10px;flex-wrap:wrap}
+.dc-q{background:#0d1640;border:1px solid rgba(0,245,255,.2);color:#00f5ff;padding:5px 10px;border-radius:20px;font-size:10px;cursor:pointer;font-family:inherit}
+.dc-q:hover{background:rgba(0,245,255,.13)}
+#dc-ia{border-top:1px solid rgba(0,245,255,.07);padding:12px 14px;display:flex;gap:8px;align-items:flex-end;background:#080814}
+#dc-inp{flex:1;background:#0d0d20;border:1px solid rgba(0,245,255,.13);color:#fff;padding:10px 12px;border-radius:10px;font-size:12px;font-family:inherit;resize:none;outline:none;min-height:40px;max-height:90px}
+#dc-inp::placeholder{color:rgba(255,255,255,.2)}
+#dc-inp:focus{border-color:rgba(0,245,255,.4)}
+#dc-snd{background:linear-gradient(135deg,#00f5ff,#0066ff);border:none;color:#0a0a0f;width:38px;height:38px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#dc-snd:hover{transform:scale(1.05)}
+.dc-ty{display:flex;gap:4px;align-items:center;padding:10px 14px;background:#151530;border:1px solid rgba(0,245,255,.13);border-radius:12px;border-bottom-left-radius:4px;align-self:flex-start;width:fit-content}
+.dc-ty span{width:5px;height:5px;background:#00f5ff;border-radius:50%;animation:dc-t 1.2s infinite}
+.dc-ty span:nth-child(2){animation-delay:.2s}.dc-ty span:nth-child(3){animation-delay:.4s}
 @keyframes dc-t{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
-.dc-foot{text-align:center;font-size:9px;color:#ffffff22;padding:6px;letter-spacing:1px;text-transform:uppercase}
+.dc-ft{text-align:center;font-size:9px;color:rgba(255,255,255,.13);padding:6px;letter-spacing:1px;text-transform:uppercase}
 </style>
 <div id="dubcore-chat-widget">
-<button id="dubcore-toggle" aria-label="Chat" onclick="dcToggle()"><div id="dc-notif"></div><svg id="dc-io" width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#0a0a0f" stroke-width="2.5" stroke-linejoin="round" fill="none"/></svg><span id="dc-ic" style="display:none;color:#0a0a0f;font-size:20px;font-weight:900">â</span></button>
+<button id="dubcore-toggle" aria-label="Chat" onclick="dcT()">
+<div id="dc-notif"></div>
+<svg id="dc-io" width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#0a0a0f" stroke-width="2.5" stroke-linejoin="round"/></svg>
+<span id="dc-ic" style="display:none;color:#0a0a0f;font-size:20px;font-weight:900">X</span>
+</button>
 <div id="dubcore-box">
-<div id="dc-header"><div class="dc-avatar">D</div><div><div class="dc-hname">DubcoreAI Support</div><div class="dc-hsub"><div class="dc-sdot"></div>ONLINE</div></div><button class="dc-xbtn" onclick="dcToggle()">â</button></div>
-<div id="dc-name-row"><input class="dc-inp" id="dc-name" placeholder="Your name"/><input class="dc-inp" id="dc-phone" placeholder="Phone / email" style="flex:1.4"/></div>
-<div id="dc-messages"><div class="dc-msg bot">ð Hey! What can DubcoreAI help your business with today?</div></div>
-<div id="dc-quick"><button class="dc-q" onclick="dcQ('I want a demo')">ð¯ Get a Demo</button><button class="dc-q" onclick="dcQ('Tell me about pricing')">ð° Pricing</button><button class="dc-q" onclick="dcQ('How does the AI receptionist work?')">ð¤ How it works</button></div>
-<div id="dc-input-area"><textarea id="dc-input" placeholder="Type your message..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();dcSend()}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea><button id="dc-send" onclick="dcSend()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="#0a0a0f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-<div class="dc-foot">Powered by DubcoreAI Â· Every business needs AI.</div>
+<div id="dc-hdr">
+<div class="dc-av">D</div>
+<div><div class="dc-hn">DubcoreAI Support</div><div class="dc-hs"><div class="dc-sd"></div>ONLINE &mdash; We reply fast</div></div>
+<button class="dc-xb" onclick="dcT()">X</button>
+</div>
+<div id="dc-nr"><input class="dc-in" id="dc-nm" placeholder="Your name"/><input class="dc-in" id="dc-ph" placeholder="Phone / email" style="flex:1.4"/></div>
+<div id="dc-msgs"><div class="dc-m bot">Hey! What can DubcoreAI help your business with today?</div></div>
+<div id="dc-qk">
+<button class="dc-q" onclick="dcQ('I want a demo')">Get a Demo</button>
+<button class="dc-q" onclick="dcQ('Tell me about pricing')">Pricing</button>
+<button class="dc-q" onclick="dcQ('How does the AI receptionist work?')">How it works</button>
+</div>
+<div id="dc-ia">
+<textarea id="dc-inp" placeholder="Type your message..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();dcS()}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea>
+<button id="dc-snd" onclick="dcS()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="#0a0a0f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</div>
+<div class="dc-ft">Powered by DubcoreAI &middot; Every business needs AI.</div>
 </div>
 </div>
 <script>
 (function(){
-var open=false;
-setTimeout(function(){if(!open)document.getElementById('dc-notif').style.display='block'},4000);
-window.dcToggle=function(){open=!open;var b=document.getElementById('dubcore-box');var io=document.getElementById('dc-io');var ic=document.getElementById('dc-ic');if(open){b.classList.add('open');document.getElementById('dc-notif').style.display='none';io.style.display='none';ic.style.display='block';document.getElementById('dc-name').focus()}else{b.classList.remove('open');io.style.display='block';ic.style.display='none'}};
-window.dcQ=function(t){document.getElementById('dc-input').value=t;dcSend()};
-function dcMsg(t,c){var d=document.getElementById('dc-messages');var m=document.createElement('div');m.className='dc-msg '+c;m.textContent=t;d.appendChild(m);d.scrollTop=d.scrollHeight}
-function dcTyping(){var d=document.getElementById('dc-messages');var t=document.createElement('div');t.className='dc-typing';t.id='dc-typ';t.innerHTML='<span><\/span><span><\/span><span><\/span>';d.appendChild(t);d.scrollTop=d.scrollHeight}
-function dcRmTyping(){var t=document.getElementById('dc-typ');if(t)t.remove()}
-window.dcSend=function(){
-var inp=document.getElementById('dc-input');
-var name=document.getElementById('dc-name').value.trim()||'Visitor';
-var phone=document.getElementById('dc-phone').value.trim()||'Not provided';
-var txt=inp.value.trim();
-if(!txt)return;
-document.getElementById('dc-quick').style.display='none';
-dcMsg(txt,'user');inp.value='';inp.style.height='auto';dcTyping();
-var ts=new Date().toLocaleString('en-US',{timeZone:'America/Chicago'});
-var body='ð¤ DUBCOREAI NEW CHAT\nFrom: '+name+'\nContact: '+phone+'\nTime: '+ts+' CST\n---\n'+txt;
-fetch('https://dubcoreai-receptionist.onrender.com/notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,contact:phone,message:txt,business:'DubcoreAI'})}).catch(function(){});
-var r=['Got it '+name.split(' ')[0]+'! Passing your message to the DubcoreAI team now. We will reach out to '+phone+' ASAP.','Perfect! The DubcoreAI team has been notified. Every business is going to need AI - let us get yours set up!','Message received! We will be in touch soon. DubcoreAI is built for businesses like yours.'];
-setTimeout(function(){dcRmTyping();dcMsg(r[Math.floor(Math.random()*r.length)],'bot');dcMsg('Message sent successfully','ok')},1800);
+var op=false;
+setTimeout(function(){if(!op)document.getElementById('dc-notif').style.display='block'},4000);
+window.dcT=function(){op=!op;var b=document.getElementById('dubcore-box');var io=document.getElementById('dc-io');var ic=document.getElementById('dc-ic');if(op){b.classList.add('open');document.getElementById('dc-notif').style.display='none';io.style.display='none';ic.style.display='block';document.getElementById('dc-nm').focus()}else{b.classList.remove('open');io.style.display='block';ic.style.display='none'}};
+window.dcQ=function(t){document.getElementById('dc-inp').value=t;dcS()};
+function dcM(t,c){var d=document.getElementById('dc-msgs');var m=document.createElement('div');m.className='dc-m '+c;m.textContent=t;d.appendChild(m);d.scrollTop=d.scrollHeight}
+function dcTy(){var d=document.getElementById('dc-msgs');var t=document.createElement('div');t.className='dc-ty';t.id='dc-typ';t.innerHTML='<span></span><span></span><span></span>';d.appendChild(t);d.scrollTop=d.scrollHeight}
+function dcRt(){var t=document.getElementById('dc-typ');if(t)t.remove()}
+window.dcS=function(){
+var inp=document.getElementById('dc-inp');
+var nm=document.getElementById('dc-nm').value.trim()||'Visitor';
+var ph=document.getElementById('dc-ph').value.trim()||'Not provided';
+var tx=inp.value.trim();if(!tx)return;
+document.getElementById('dc-qk').style.display='none';
+dcM(tx,'usr');inp.value='';inp.style.height='auto';dcTy();
+fetch('https://dubcoreai-receptionist.onrender.com/notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:nm,contact:ph,message:tx,business:'DubcoreAI'})}).catch(function(){});
+var r=['Got it '+nm.split(' ')[0]+'! Passing your message to the DubcoreAI team. We will reach out to '+ph+' ASAP.','Perfect! The DubcoreAI team has been notified. Every business is going to need AI.','Message received! We will be in touch soon.'];
+setTimeout(function(){dcRt();dcM(r[Math.floor(Math.random()*r.length)],'bot');dcM('Message sent successfully','ok')},1800);
 };
 })();
 </script>
