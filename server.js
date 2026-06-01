@@ -165,7 +165,7 @@ app.post('/notify', async (req, res) => {
     const postData = JSON.stringify({ chat_id: '7951849803', text });
     const options = {
       hostname: 'api.telegram.org',
-      path: '/bot8858146510:AAGRN5XQcl8kCfZ4yha0q1fuUjCF4ER2qL8/sendMessage',
+      path: '/bot8858146510:AAEhUhvwKzWwz5W8xrkB2sYgxsRVqfpYfEM/sendMessage',
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(postData) }
     };
@@ -198,7 +198,7 @@ app.get('/getid', (req, res) => {
   const https = require('https');
   const options = {
     hostname: 'api.telegram.org',
-    path: '/bot8858146510:AAGRN5XQcl8kCfZ4yha0q1fuUjCF4ER2qL8/getUpdates?limit=10',
+    path: '/bot8858146510:AAEhUhvwKzWwz5W8xrkB2sYgxsRVqfpYfEM/getUpdates?limit=10',
     method: 'GET'
   };
   const tgReq = https.request(options, tgRes => {
